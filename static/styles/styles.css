@@ -54,14 +54,6 @@ body {
     margin-right: 20px;
 }
 
-.sun {
-    background-image: url('../images/sun-icon.png'); /* Correct path for sun icon image */
-}
-
-.rain {
-    background-image: url('../images/rain_heavy_icon.png'); /* Correct path for rain icon image */
-}
-
 .weather-info h2 {
     margin: 0;
     font-size: 2em;
