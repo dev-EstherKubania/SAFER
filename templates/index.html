@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Design</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Weather</h1>
+            <p>#Dailyuidesign<br>Using Glassmorphism style</p>
+            <a href="https://www.behance.net/estellascheidtson">Behance</a>
+        </div>
+        <div class="current-weather">
+            <div class="weather-icon sun"></div>
+            <div class="weather-info">
+                <h2>Buea - Cameroon</h2>
+                <p class="temperature">23°C | °F</p>
+                <div class="details">
+                    <p>Precipitation: 0%</p>
+                    <p>Humidity: 81%</p>
+                    <p>Wind: 5km/h</p>
+                    <p>H: 24°C  L: 18°C</p>
+                </div>
+            </div>
+        </div>
+        <div class="forecast">
+            <div class="day">
+                <div class="weather-icon rain"></div>
+                <p>29°C</p>
+                <p>Friday</p>
+            </div>
+            <div class="day">
+                <div class="weather-icon rain">
+                    <img src="{% static 'images/weather-icon rain.png'%}" alt="">
+                </div>
+                <p>28°C</p>
+                <p>Saturday</p>
+            </div>
+            <div class="day">
+                <div class="weather-icon rain"></div>
+                <p>28°C</p>
+                <p>Sunday</p>
+            </div>
+            <div class="day">
+                <div class="weather-icon rain">
+                    <img src="{% static 'images/weather-icon sun.png'%}" alt="">
+                </div>
+                <p>28°C</p>
+                <p>Monday</p>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
