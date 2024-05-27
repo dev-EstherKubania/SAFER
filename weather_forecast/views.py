@@ -1,10 +1,28 @@
 import datetime
 import requests
+import os
 from django.shortcuts import render
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    API_KEY = os.getenv('API_KEY')
+    current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
+    forecast_url = 'https://api.openweathermap.org/data/3.0/onecall?lat={}&lon={}&exclude=current,minutely,hourly&appid={}'
+
+    city = 'nakuru'
+    weather_data, forecast_data, alerts = fetch_weather(city, API_KEY, current_weather_url, forecast_url)
+
+    context = {
+        'weather_data': weather_data,
+        'forecast_data': forecast_data,
+        'alerts': alerts,
+    }
+
+    return render(request, 'index.html', context)
 
 # fetch weather data
 def fetch_weather(city, api_key, current_weather_url, forecast_url):
@@ -19,22 +37,27 @@ def fetch_weather(city, api_key, current_weather_url, forecast_url):
         'temperature': round(response['main']['temp'] - 273.15, 2),
         'description': response['weather'][0]['description'],
         'icon': response['weather'][0]['icon'],
+        'humidity': response['main']['humidity'],
+        'wind_speed': response['wind']['speed'],
+        'min_temp': round(forecast_response['daily'][0]['temp']['min'] - 273.15, 2),
+        'max_temp': round(forecast_response['daily'][0]['temp']['max'] - 273.15, 2),
     }
 
     forecast_data = []
-    for forecast in forecast_response['daily']:
+    for forecast in forecast_response['daily'][1:6]:
         forecast_data.append({
             'day': datetime.datetime.fromtimestamp(forecast['dt']).strftime('%A'),
             'temperature': round(forecast['temp']['day'] - 273.15, 2),
             'description': forecast['weather'][0]['description'],
             'icon': forecast['weather'][0]['icon'],
         })
-
+        
     alerts = []
-    for alert in forecast_response['alerts']:
-        alerts.append({
-            'event': alert['event'],
-            'description': alert['description'],
-        })
+    if 'alerts' in forecast_response:
+        for alert in forecast_response['alerts']:
+            alerts.append({
+                'event': alert['event'],
+                'description': alert['description'],
+            })
 
     return weather_data, forecast_data, alerts
