@@ -4,54 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Design</title>
+    <title>SAFER</title>
     <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Weather</h1>
-            <p>#Dailyuidesign<br>Using Glassmorphism style</p>
-            <a href="https://www.behance.net/estellascheidtson">Behance</a>
+            <h1>Weather Forecast</h1>
+            <form action=""></form>
         </div>
         <div class="current-weather">
-            <div class="weather-icon sun"></div>
-            <div class="weather-info">
-                <h2>Buea - Cameroon</h2>
-                <p class="temperature">23°C | °F</p>
-                <div class="details">
-                    <p>Precipitation: 0%</p>
-                    <p>Humidity: 81%</p>
-                    <p>Wind: 5km/h</p>
-                    <p>H: 24°C  L: 18°C</p>
+            {% if weather_data %}
+                <div class="weather-icon">
+                    <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
                 </div>
-            </div>
+                <div class="weather-info">
+                    <h2>{{weather_data.city}} - </h2>
+                    <p class="temperature">{{ weather_data.temperature }}°C</p>
+                    <div class="details">
+                        <p>Description: {{ weather_data.description}}</p>
+                        <p>Humidity: {{weather_data.humidity}}%</p>
+                        <p>Wind: {{weather_data.wind_speed}}km/h</p>
+                        <p>H: {{weather_data.max_temp}}°C  L: {{weather_data.min_temp}}°C</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            
         </div>
         <div class="forecast">
-            <div class="day">
-                <div class="weather-icon rain"></div>
-                <p>29°C</p>
-                <p>Friday</p>
-            </div>
-            <div class="day">
-                <div class="weather-icon rain">
-                    <img src="{% static 'images/weather-icon rain.png'%}" alt="">
-                </div>
-                <p>28°C</p>
-                <p>Saturday</p>
-            </div>
-            <div class="day">
-                <div class="weather-icon rain"></div>
-                <p>28°C</p>
-                <p>Sunday</p>
-            </div>
-            <div class="day">
-                <div class="weather-icon rain">
-                    <img src="{% static 'images/weather-icon sun.png'%}" alt="">
-                </div>
-                <p>28°C</p>
-                <p>Monday</p>
-            </div>
+            {% if forecast_data %}
+                {% for forecast in forecast_data %}
+                    <div class="day">
+                        <div class="weather-icon">
+                            <img src="http://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.description }}">
+                        </div>
+                        <p>{{forecast.temperature}}°C</p>
+                        <p>{{forecast.day}}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
     <script src="{% static 'js/script.js' %}"></script>
