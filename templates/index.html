@@ -4,56 +4,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Design</title>
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <title>SAFER</title>
 </head>
 <body>
-    <div class="container">
+    <nav class="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'index' %}">SAFER</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Community</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Emergency contacts</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="container forecast-container mt-5">
         <div class="header">
-            <h1>Weather</h1>
-            <p>#Dailyuidesign<br>Using Glassmorphism style</p>
-            <a href="https://www.behance.net/estellascheidtson">Behance</a>
+            <h1 class="mb-3">Weather Forecast</h1>
+            <form action="" method="POST" class="d-flex justify-content-center" role="search">
+                {% csrf_token %}
+                <input name="city" class="form-control me-2 city-search" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-warning" type="submit">Search</button>
+            </form>
         </div>
         <div class="current-weather">
-            <div class="weather-icon sun"></div>
-            <div class="weather-info">
-                <h2>Buea - Cameroon</h2>
-                <p class="temperature">23°C | °F</p>
-                <div class="details">
-                    <p>Precipitation: 0%</p>
-                    <p>Humidity: 81%</p>
-                    <p>Wind: 5km/h</p>
-                    <p>H: 24°C  L: 18°C</p>
+            {% if weather_data %}
+                <div class="current-weather-icon">
+                    <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
                 </div>
-            </div>
+                <div class="weather-info">
+                    <h2>{{weather_data.city}} - {{weather_data.country}} </h2>
+                    <p class="temperature">{{ weather_data.temperature }}°C</p>
+                    <div class="details">
+                        <p>Description: {{ weather_data.description}}</p>
+                        <p>Humidity: {{weather_data.humidity}}%</p>
+                        <p>Wind: {{weather_data.wind_speed}}km/h</p>
+                        <p>H: {{weather_data.max_temp}}°C  L: {{weather_data.min_temp}}°C</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            
         </div>
         <div class="forecast">
-            <div class="day">
-                <div class="weather-icon rain"></div>
-                <p>29°C</p>
-                <p>Friday</p>
-            </div>
-            <div class="day">
-                <div class="weather-icon rain">
-                    <img src="{% static 'images/weather-icon rain.png'%}" alt="">
-                </div>
-                <p>28°C</p>
-                <p>Saturday</p>
-            </div>
-            <div class="day">
-                <div class="weather-icon rain"></div>
-                <p>28°C</p>
-                <p>Sunday</p>
-            </div>
-            <div class="day">
-                <div class="weather-icon rain">
-                    <img src="{% static 'images/weather-icon sun.png'%}" alt="">
-                </div>
-                <p>28°C</p>
-                <p>Monday</p>
-            </div>
+            {% if forecast_data %}
+                {% for forecast in forecast_data %}
+                    <div class="day">
+                        <div class="weather-icon">
+                            <img src="http://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.description }}">
+                        </div>
+                        <p>{{forecast.temperature}}°C</p>
+                        <p>{{forecast.day}}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
+    <!-- Bootstrap js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
     <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
