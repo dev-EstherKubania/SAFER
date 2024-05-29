@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'weather_forecast',
     'users',
+
+    'widget_tweaks',
 ]
 
 AUTH_USER_MODEL = 'users.User'
