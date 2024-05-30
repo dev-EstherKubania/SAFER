@@ -7,7 +7,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-     path('', home, name='home'),
+    path('', home, name='home'),
     path('create/', create_weather_alert, name='create_weather_alert'),
     path('alerts/', user_alerts, name='user_alerts'),
     path('signup/', signup, name='signup'),

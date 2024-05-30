@@ -1,7 +1,8 @@
 from django import forms
 from .models import WeatherAlert
 from .models import WeatherAlert, UserMessage
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from users.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserProfile
 
