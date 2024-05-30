@@ -20,4 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('weather_forecast.urls')),
     path('users/', include('users.urls')),
+    path('blog/', include('blog.urls')),
+    # path('', homepage, name='homepage'),
 ]
