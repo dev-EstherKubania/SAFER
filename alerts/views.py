@@ -30,7 +30,7 @@ def create_weather_alert(request):
         form = WeatherAlertForm()
     return render(request, 'create_weather_alert.html', {'form': form})
 
-@login_required
+
 def user_alerts(request):
     alerts = WeatherAlert.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'user_alerts.html', {'alerts': alerts})
@@ -48,7 +48,7 @@ def signup(request):
 
 @login_required
 def home(request):
-    return render(request, 'alerts/profile.html')
+    return render(request, 'registration/home.html')
 
 def profile(request):
     user = request.user
