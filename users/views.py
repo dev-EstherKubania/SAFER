@@ -14,7 +14,7 @@ def register(request):
         if form.is_valid:
             user = form.save()
             messages.success(request, 'Acount has been created succesfully')
-            return redirect('login_user')
+            return redirect('login-user')
         else:
             for field, errors in form.errors.items():
                 for error in errors:
@@ -42,10 +42,10 @@ def login_user(request):
             return redirect('index')
         else:
             messages.warning(request, 'Invalid credentials')
-            return redirect('login_user')
+            return redirect('login-user')
 
     return render(request, 'users/login.html')
 
 def logout_user(request):
     logout(request)
-    return redirect('login_user')
+    return redirect('login-user')
