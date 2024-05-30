@@ -25,7 +25,7 @@ def register(request):
         context = {
             'form': form
         }
-        return render(request, 'users/register_user.html', context)
+        return render(request, 'users/register.html', context)
 
 
 def login_user(request):
@@ -44,7 +44,7 @@ def login_user(request):
             messages.warning(request, 'Invalid credentials')
             return redirect('login_user')
 
-    return render(request, 'users/login_user.html')
+    return render(request, 'users/login.html')
 
 def logout_user(request):
     logout(request)
