@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% block content %}
+<h1>Homepage</h1>
+<h2>Latest Blog Posts</h2>
+<ul>
+    {% for post in posts %}
+        <li>
+            <a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a>
+            <p>{{ post.content|slice:":200" }}...</p>
+            <small>Posted by {{ post.author }} on {{ post.date_posted }}</small>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'blog-home' %}">View All Blog Posts</a>
+{% endblock %}
