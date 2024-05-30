@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #000033, #000080); /* Dark blue gradient */
+            color: #e21f1f; /* Text color */
+            text-align: center;
+            height: 100vh; /* Set height to viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2em; /* Adjust font size as needed */
+            margin-bottom: 20px; /* Add spacing below the heading */
+        }
+
+        p {
+            margin-top: 20px; /* Add spacing above the paragraph */
+        }
+
+        a {
+            color: #fff; /* Link color */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Weather Alerts System</h1>
+    <p>Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'signup' %}">signup</a> to create and view alerts.</p>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #000033, #000080); /* Dark blue gradient */
+            color: #da1f1f; /* Text color */
+            text-align: center;
+            height: 100vh; /* Set height to viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 1.5em; /* Adjust font size as needed */
+            margin-bottom: 20px; /* Add spacing below the heading */
+        }
+
+        form {
+            margin-bottom: 20px; /* Add spacing below the form */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Green button color */
+            color: #fff; /* Button text color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Darker green button color on hover */
+        }
+
+        p {
+            margin-top: 20px; /* Add spacing above the paragraph */
+        }
+
+        a {
+            color: #fff; /* Link color */
+        }
+    </style>
+</head>
+<body>
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a>.</p>
+</body>
+</html>

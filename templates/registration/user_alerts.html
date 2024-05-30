@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Weather Alerts</title>
+</head>
+<body>
+    <h2>Your Weather Alerts</h2>
+    <ul>
+        {% for alert in alerts %}
+            <li>
+                <p>{{ alert.alert_message }} for {{ alert.location }} ({{ alert.created_at }})</p>
+                {% if alert.image %}
+                    <img src="{{ alert.image.url }}" alt="Alert Image" style="max-width: 200px; max-height: 200px;">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'create_weather_alert' %}">Create New Alert</a>
+</body>
+</html>
