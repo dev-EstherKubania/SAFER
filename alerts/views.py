@@ -46,8 +46,9 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+@login_required
 def home(request):
-    return render(request, 'registration/home.html')
+    return render(request, 'alerts/profile.html')
 
 def profile(request):
     user = request.user
