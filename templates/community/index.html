@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <!-- Fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="../../static/styles/styles.css">
+    <link rel="stylesheet" href="{% static 'styles/styles.css'%}">
     <title>SAFER</title>
 </head>
 <body>
@@ -30,7 +31,7 @@
         </form>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="#">Community</a>
+            <a class="nav-link" href="{% url 'community-home' %}">Community</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
@@ -113,98 +114,35 @@
                 </div>
             </div>
             <div class="col-6">
-                <div class="container">
-                    <div class="d-flex justify-content-between py-4">
-                        <h3 class="fs-4 fw-bold" >Forums</h3>
-                        <button class="btn btn-primary">New Forum</button>
-                    </div>
+              <div class="container">
+                  <div class="d-flex justify-content-between py-4">
+                      <h3 class="fs-4 fw-bold" >Forums</h3>
+                      <a href="{% url 'create_forum' %}" class="btn btn-primary">New Forum</a>
+                  </div>
+                  {% for forum in forums %}
                     <div class="card auth-card text-white mb-4">
                       <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                           <div class="d-flex py-2 align-items-center">
                             <img src="../../static/images/avatar.svg" alt="user" class="rounded-circle" width="40" height="40">
-                            <h6 class="ms-2 pt-2">John
+                            <h6 class="ms-2 pt-2">{{forum.owner.username}}
                           </div>
-                          <small>3 days ago</small>
+                          <small>{{forum.created_at|timesince}}</small>
                         </div>
-                        <a href=""><h5 class="card-title">Nakuru residents</h5></a>
-                        <p class="card-text">We will be talking matters about our county Nakuru, lets keep each other informed on weather events</p>
+                        <a href="{% url 'forum' forum.id %}"><h5 class="card-title">{{forum.name}}</h5></a>
+                        <p class="card-text">{{forum.description}}</p>
                       </div>
                       <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="icon">
                           <i class="fa-solid fa-user-group"></i>
-                          <span>10</span>
+                          <span>{{forum.members.all.count}}</span>
                         </div>
-                        <span class="badge text-bg-secondary">Nakuru</span>
-
+                        <span class="badge text-bg-secondary">{{forum.region.name}}</span>
                       </div>
                     </div>
-                    <div class="card auth-card text-white mb-4">
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex py-2 align-items-center">
-                            <img src="../../static/images/avatar.svg" alt="user" class="rounded-circle" width="40" height="40">
-                            <h6 class="ms-2 pt-2">Mike
-                          </div>
-                          <small>3 days ago</small>
-                        </div>
-                        <a href=""><h5 class="card-title">Nairobi Alert zone</h5></a>
-                        <p class="card-text">We will be talking matters about our county Nakuru, lets keep each other informed on weather events</p>
-                      </div>
-                      <div class="card-footer d-flex justify-content-between align-items-center">
-                        <div class="icon">
-                          <i class="fa-solid fa-user-group"></i>
-                          <span>12k</span>
-                        </div>
-                        <span class="badge text-bg-secondary">Nairobi</span>
-
-                      </div>
-                    </div>
-                    <div class="card auth-card text-white mb-4">
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex py-2 align-items-center">
-                            <img src="../../static/images/avatar.svg" alt="user" class="rounded-circle" width="40" height="40">
-                            <h6 class="ms-2 pt-2">John
-                          </div>
-                          <small>3 days ago</small>
-                        </div>
-                        <h5 class="card-title">Turkana updates</h5>
-                        <p class="card-text">We will be talking matters about our county Nakuru, lets keep each other informed on weather events</p>
-                      </div>
-                      <div class="card-footer d-flex justify-content-between align-items-center">
-                        <div class="icon">
-                          <i class="fa-solid fa-user-group"></i>
-                          <span>80</span>
-                        </div>
-                        <span class="badge text-bg-secondary">Turkana</span>
-
-                      </div>
-                    </div>
-                    <div class="card auth-card text-white mb-4">
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div class="d-flex py-2 align-items-center">
-                            <img src="../../static/images/avatar.svg" alt="user" class="rounded-circle" width="40" height="40">
-                            <h6 class="ms-2 pt-2">John
-                          </div>
-                          <small>5 days ago</small>
-                        </div>
-                        <h5 class="card-title">Baringo community</h5>
-                        <p class="card-text">We will be talking matters about our county Nakuru, lets keep each other informed on weather events</p>
-                      </div>
-                      <div class="card-footer d-flex justify-content-between align-items-center">
-                        <div class="icon">
-                          <i class="fa-solid fa-user-group"></i>
-                          <span>10</span>
-                        </div>
-                        <span class="badge text-bg-secondary">Baringo</span>
-
-                      </div>
-                    </div>
-                </div>
-
-            </div>
+                  {% endfor %}
+              </div>
+          </div>
             <div class="col-3">
               <div class="card auth-card text-white my-4">
                 <h5 class="card-header fw-bold fs-4">Weather Alerts</h5>
@@ -240,6 +178,6 @@
 
     <!-- Bootstrap js -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-    <script src="../../static/js/script.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
