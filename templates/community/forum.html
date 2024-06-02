@@ -191,6 +191,94 @@
         </div>
     </div>
 
+    <script>
+      const forumId = "{{ forum.id }}";
+      const userName = "{{ request.user.username }}";
+  
+      const chatSocket = new WebSocket(
+          'ws://' + window.location.host + '/ws/forum/' + forumId + '/'
+      );
+  
+      const chatContainer = document.querySelector('.chat-container');
+  
+      chatSocket.onmessage = function(e) {
+          const data = JSON.parse(e.data);
+  
+          // Determine if the message is from the current user
+          const isSender = data.sender === userName;
+  
+          // Create the message HTML
+          let messageHtml = '';
+  
+          if (isSender) {
+              messageHtml = `
+                  <div class="d-flex flex-row justify-content-end mb-2" id="sender">
+                      <div class="card bg-info me-2" style="width: 18rem;">
+                          ${data.media_url ? `<img src="${data.media_url}" class="card-img-top" alt="...">` : ''}
+                          ${data.message ? `<div class="card-body text-white"><p class="card-text">${data.message}</p></div>` : ''}
+                      </div>
+                  </div>
+              `;
+            } else {
+              messageHtml = `
+                  <div class="d-flex flex-row justify-content-start mb-2" id="receiver">
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
+                      <div class="card ms-2" style="width: 18rem; background-color: #f5f6f7;">
+                          ${data.media_url ? `<img src="${data.media_url}" class="card-img-top" alt="...">` : ''}
+                          <div class="card-body">
+                              <h5 class="card-title fs-5 text-muted">${data.sender}</h5>
+                              ${data.message ? `<p class="card-text">${data.message}</p>` : ''}
+                          </div>
+                      </div>
+                  </div>
+              `;
+          }
+  
+          chatContainer.innerHTML += messageHtml;
+  
+          // Scroll to the bottom of the chat container
+          chatContainer.scrollTop = chatContainer.scrollHeight;
+      };
+  
+      document.getElementById('chat-form').onsubmit = function(e) {
+          e.preventDefault();
+          const messageInput = document.getElementById('text');
+          const message = messageInput.value;
+          const mediaInput = document.getElementById('formFile');
+          const mediaFile = mediaInput.files[0];
+  
+          if (mediaFile) {
+              const formData = new FormData();
+              formData.append('file', mediaFile);
+              fetch('/community/upload_media/', {
+                  method: 'POST',
+                  body: formData,
+                  headers: {
+                      'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                  },
+              })
+              .then(response => response.json())
+              .then(data => {
+  
+                console.log("Media URL:", data.media_url);
+  
+                  chatSocket.send(JSON.stringify({
+                      'message': message,
+                      'media_url': data.media_url,
+                  }));
+              });
+          } else {
+              chatSocket.send(JSON.stringify({
+                  'message': message,
+                  'media_url': '',
+              }));
+          }
+  
+          messageInput.value = '';
+          mediaInput.value = '';
+      };
+  </script>
+
     <!-- Bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" ></script>
