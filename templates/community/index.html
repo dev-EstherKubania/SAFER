@@ -76,43 +76,21 @@
 
     <div class="container">
         <div class="row">
-            <div class=" col-3 p-2">
-                <h3  class="pt-2 fs-4 fw-bold">Regions</h3>
-                <div class="p-3">
-                  <ul class="list-group">
-                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-medium">Baringo</div>
-                      </div>
-                      <span class="badge text-bg-primary rounded-pill">4</span>
-                    </li>
-                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-medium">Nairobi</div>
-                      </div>
-                      <span class="badge text-bg-primary rounded-pill">10</span>
-                    </li>
-                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-medium">Nakuru</div>
-                      </div>
-                      <span class="badge text-bg-primary rounded-pill">8</span>
-                    </li>
-                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-medium">Mombasa</div>
-                      </div>
-                      <span class="badge text-bg-primary rounded-pill">84</span>
-                    </li>
-                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-medium">Kiambu</div>
-                      </div>
-                      <span class="badge text-bg-primary rounded-pill">8</span>
-                    </li>
-                  </ul>
-                </div>
+          <div class=" col-3 p-2">
+            <h3  class="pt-2 fs-4 fw-bold">Regions</h3>
+            <div class="p-3">
+              <ul class="list-group">
+                {% for region in regions %}
+                <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-medium">{{region.name}}</div>
+                  </div>
+                  <span class="badge text-bg-primary rounded-pill">{{region.forum_set.all.count}}</span>
+                </li>
+                {% endfor %}
+              </ul>
             </div>
+          </div>
             <div class="col-6">
               <div class="container">
                   <div class="d-flex justify-content-between py-4">
