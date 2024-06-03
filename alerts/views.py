@@ -66,3 +66,18 @@ def profile(request):
     return render(request, 'alerts/profile.html', {'user': user,
         'form':form, 'alerts': alerts,
         })
+
+def send_alert_email(alert):
+    user_profile = alert.user.userprofile
+    if user_profile.alert_preference == UserProfile.RECEIVE_NO_ALERTS:
+        return  # Do not send email
+    if user_profile.alert_preference == UserProfile.RECEIVE_LOCATION_ALERTS:
+        if 'location' not in alert.message:
+            return  # Do not send email if it's not a location alert
+    
+    subject = 'New Alert'
+    message = f"Dear {alert.user.username},\n\nYou have a new weather alert:\n\n{alert.message}\n\nBest regards,\nYour Weather App Team"
+    from_email = 'eskury@gmail.com'  # Replace with your email address
+    recipient_list = [alert.user.email]
+    send_mail(subject, message, from_email, recipient_list)
+

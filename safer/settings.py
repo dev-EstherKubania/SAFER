@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'weather_forecast',
     'users',
     'community',
-
     'widget_tweaks',
 ]
 
@@ -145,17 +144,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email configuration (example using console backend)
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
-EMAIL_HOST = 'smtp.example.com'
+DEFAULT_FROM_EMAIL = 'eskury@gmail.com'
+EMAIL_HOST = 'smtp@gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your_email@example.com'
-EMAIL_HOST_PASSWORD = 'your_password'
+EMAIL_HOST_USER = 'eskury@gmail.com@gmail.com'
+EMAIL_HOST_PASSWORD = 'nljhymcysuppodva'
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
-LOGIN_REDIRECT_URL = 'profile'
-LOGOUT_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = 'profile'
+# LOGOUT_REDIRECT_URL = '/'
