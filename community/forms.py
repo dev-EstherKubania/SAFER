@@ -1,5 +1,5 @@
 from django import forms
-from .models import Message
+from .models import Message, Forum
 
 
 class MessageForm(forms.ModelForm):
@@ -8,3 +8,10 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ['text', 'media']
+
+
+class CreateForumForm(forms.ModelForm):
+    class Meta:
+        model = Forum
+        fields = '__all__'
+        exclude = ['owner', 'members']

@@ -81,6 +81,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     
     @database_sync_to_async
     def create_message(self, forum, user, message, media):
+        forum.members.add(user)
         return Message.objects.create(
             forum=forum,
             sender=user,
