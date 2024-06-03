@@ -38,8 +38,13 @@ def login_user(request):
         user = authenticate(request, email=email, password=password)
         if user is not None and user.is_active:
             login(request, user)
-            messages.success(request, 'You are now logged in')
-            return redirect('index')
+            if 'next' in request.POST:
+                messages.success(request, 'You are now logged in')
+                return redirect(request.POST.get('next'))
+            else:
+                print('here',request.POST['next'])
+                messages.success(request, 'You are now logged in')
+                return redirect('index')
         else:
             messages.warning(request, 'Invalid credentials')
             return redirect('login-user')
