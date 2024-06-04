@@ -42,7 +42,7 @@ def login_user(request):
                 messages.success(request, 'You are now logged in')
                 return redirect(request.POST.get('next'))
             else:
-                print('here',request.POST['next'])
+                # print('here',request.POST['next'])
                 messages.success(request, 'You are now logged in')
                 return redirect('index')
         else:
