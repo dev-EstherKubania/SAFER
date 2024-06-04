@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'community',
     'alerts',
+    'blog',
 
     'widget_tweaks',
 ]
