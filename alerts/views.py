@@ -8,22 +8,40 @@ from django.conf import settings
 # Create your views here.
 
 @login_required
-def create_weather_alert(request):
+def profile(request):
+    user = request.user
     if request.method == 'POST':
         form = WeatherAlertForm(request.POST, request.FILES)
         if form.is_valid():
             alert = form.save(commit=False)
-            alert.user = request.user
+            alert.user = user
             alert.save()
-            
-            recipients = User.objects.filter(receive_alerts=True).values_list('user__email', flat=True)
+            # recipients = UserProfile.objects.filter(receive_alerts=True).values_list('email', flat=True)
             send_mail(
                 subject='New Weather Alert',
-                message=f'New alert from {alert.user.username} at {alert.location}: {alert.message}',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=recipients,
+                message=f'New alert from {alert.user.username} at {alert.location}: {alert.alert_message}',
+                from_email='eskury@gmail.com',
+                recipient_list=('nicole.inthestars@gmail.com', 'eskury@gmail.com'),
+                # from_email=settings.DEFAULT_FROM_EMAIL,
+                #  recipient_list=recipients,
+#             )
+                fail_silently = False
             )
+            # print('Email sent to recipients')
             return redirect('profile')
     else:
         form = WeatherAlertForm()
-    return render(request, 'alerts/weather_alerts.html', {'form': form})
+    
+    alerts = WeatherAlert.objects.all()
+    return render(request, 'alerts/weather_alerts.html', {'user': user,
+                                                    'form':form, 'alerts': alerts,
+                                                    })
+
+@login_required
+def search_alerts(request):
+    if request.method == 'GET':
+        query = request.GET.get('q')
+        if query:
+            results = WeatherAlert.objects.filter(location__icontains=query).order_by('-created_at')
+        return render(request, 'alerts/weather_alerts.html', {'alerts': results})
+   
