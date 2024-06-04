@@ -19,7 +19,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Community</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'community-home' %}">Community</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
@@ -48,6 +48,9 @@
                       <label for="exampleInputEmail1">Password</label>
                       <input type="password" name="password" class="form-control" placeholder="Enter password">
                     </div>
+                    {% if request.GET.next %}
+                      <input type="hidden" name="next" value="{{request.GET.next}}">
+                    {% endif %}
                     <div class="mb-3 px-3">
                       <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
                     <input type="submit" value="Sign In" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">
