@@ -7,31 +7,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
     <title>SAFER</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
-        <div class="container">
-          <a class="navbar-brand" href="{% url 'index' %}">SAFER</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Community</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Emergency contacts</a>
-              </li>
-            </ul>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <i class="fa-solid fa-cloud-bolt fa-2x mx-3 ps-1"></i>
+      </a>
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- <form class="me-3">
+          <div class="form-white input-group" style="width: 250px;">
+            <input type="search" class="form-control rounded" placeholder="Search region or forum"
+              aria-label="Search" aria-describedby="search-addon" />
           </div>
-        </div>
-    </nav>
+        </form> -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'community-home' %}">Community</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Emergency contacts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Blog</a>
+          </li>
+          
+        </ul>
+        <ul class="navbar-nav d-flex flex-row ms-auto me-3">
+          
+          {% if user.is_authenticated %}
+          <li class="nav-item me-3 me-lg-0 dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-plus"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Add alert</a></li>
+            </ul>
+          </li>
+          <li class="nav-item me-3 me-lg-0 dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="rounded-circle" height="22"
+              alt="" loading="lazy" />
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item me-3 me-lg-0">
+            <a class="nav-link btn btn-primary" href="{% url 'login-user' %}">Login</a>
+          </li>
+          <!-- <li class="nav-item me-3 me-lg-0">
+            <a class="nav-link btn btn-primary" href="{%  url 'register' %}">Sign up</a>
+          </li> -->
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
     
     <div class="container-fluid col-md-6 col-lg-4 mt-2">
         <div class="card auth-card text-white">
@@ -41,12 +87,26 @@
             <div class="card-body">
                 <form action="" method="POST">
                     {% csrf_token %}
-                    {% for field in form %}
                     <div class="form-group mb-3 px-3">
-                      <label for="exampleInputEmail1">{{ field.label }}</label>
-                      {% render_field field class="form-control" %}
+                      <label for="exampleInputEmail1">{{ form.username.label }}</label>
+                      {% render_field form.username class="form-control" %}
                     </div>
-                    {% endfor %}
+                    <div class="form-group mb-3 px-3">
+                      <label for="exampleInputEmail1">{{ form.email.label }}</label>
+                      {% render_field form.email class="form-control" %}
+                    </div>
+                    <div class="form-group mb-3 px-3">
+                      <label for="exampleInputEmail1">{{ form.password1.label }}</label>
+                      {% render_field form.password1 class="form-control" %}
+                    </div>
+                    <div class="form-group mb-3 px-3">
+                      <label for="exampleInputEmail1">{{ form.password2.label }}</label>
+                      {% render_field form.password2 class="form-control" %}
+                    </div>
+                    <div class="form-group mb-3 px-3">
+                      <label for="exampleInputEmail1">{{ form.receive_alerts.label }}</label>
+                      {% render_field form.receive_alerts class="form-check-input" %}
+                    </div>
                     <div class="mb-3 px-3">
                       <p>Already have an account? <a href="{% url 'login-user' %}">Sign In</a></p>
                     <input type="submit" value="Register" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">
