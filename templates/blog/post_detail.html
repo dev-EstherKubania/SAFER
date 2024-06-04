@@ -31,18 +31,17 @@
         </form>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="#">Community</a>
+            <a class="nav-link" href="{% url 'community-home' %}">Community</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Emergency contacts</a>
+            <a class="nav-link" href="{% url 'emergency' %}">Emergency contacts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
+            <a class="nav-link" href="{% url 'blog-home' %}">Blog</a>
           </li>
-        </ul>
         <ul class="navbar-nav d-flex flex-row ms-auto me-3">
           <li class="nav-item me-3 me-lg-0">
             <a class="nav-link btn btn-primary" href="#">Login</a>
