@@ -1,87 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Profile</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #000033, #000080); /* Dark blue gradient */
-            color: #fff; /* Text color */
-            padding: 20px;
-        }
+  <title>Search Weather Alerts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #000033, #000080); /* Dark blue gradient */
+      color: #fff; /* Text color */
+      padding: 20px;
+    }
 
-        h1 {
-            color: #d41515;
-        }
+    h1 {
+      color: #d41515;
+    }
 
-        h2 {
-            color: #da1212;
-        }
+    h2 {
+      color: #da1212;
+    }
 
-        form {
-            margin-bottom: 20px;
-        }
+    form {
+      margin-bottom: 20px;
+    }
 
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: rgb(255, 255, 255);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: rgb(255, 255, 255);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
+    button:hover {
+      background-color: #45a049;
+    }
 
-        ul {
-            list-style: none;
-            padding: 0;
-        }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
 
-        li {
-            margin-bottom: 20px;
-            color: #fff;
-        }
+    li {
+      margin-bottom: 20px;
+      color: #fff;
+    }
 
-        strong {
-            color: #fff;
-        }
+    strong {
+      color: #fff;
+    }
 
-        img {
-            max-width: 200px;
-            max-height: 200px;
-            margin-top: 10px;
-        }
-    </style>
+    img {
+      max-width: 200px;
+      max-height: 200px;
+      margin-top: 10px;
+    }
+
+    .back-to-profile {
+      text-align: right;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome, {{ user.username }}</h1>
-    
-    <h2>Create a Weather Alert</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Alert</button>
-    </form>
-    
-    <h2>All Weather Alerts</h2>
-    <ul>
-        {% for alert in alerts %}
-            <li>
-                <strong>Location:</strong> {{ alert.location }}<br>
-                <strong>Message:</strong> {{ alert.alert_message }}<br>
-                {% if alert.image %}
-                    <strong>Image:</strong> <img src="{{ alert.image.url }}" alt="{{ alert.message }}" style="max-width: 200px; max-height: 200px;">
-                {% endif %}
-                <br>
-                <strong>Reported by:</strong> {{ alert.user.username }}<br>
-                <strong>Reported at:</strong> {{ alert.created_at }}
-            </li>
-        {% empty %}
-            <li>No alerts found.</li>
-        {% endfor %}
-    </ul>
+
+  <h1>Welcome, {{ user.username }}</h1>
+
+  <h2>Search Weather Alerts</h2>
+  <form action="{% url 'search_alerts' %}" method="get">
+    <input type="text" name="q" placeholder="Search alerts by location">
+    <button type="submit">Search</button>
+  </form>
+  
+  <h2>Create a Weather Alert</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Alert</button>
+  </form>
+
+  <h2>All Weather Alerts</h2>
+  <ul>
+    {% for alert in alerts %}
+      <li>
+        <strong>Location:</strong> {{ alert.location }}<br>
+        <strong>Message:</strong> {{ alert.alert_message }}<br>
+        {% if alert.image %}
+          <strong>Image:</strong> <img src="{{ alert.image.url }}" alt="{{ alert.message }}" style="max-width: 200px; max-height: 200px;">
+        {% endif %}
+        <br>
+        <strong>Reported by:</strong> {{ alert.user.username }}<br>
+        <strong>Reported at:</strong> {{ alert.created_at }}
+      </li>
+    {% empty %}
+      <li>No alerts found.</li>
+    {% endfor %}
+  </ul>
+
+  <div class="back-to-profile">
+    <a href="{% url 'profile' %}">Back to Profile</a>
+  </div>
+
 </body>
 </html>
