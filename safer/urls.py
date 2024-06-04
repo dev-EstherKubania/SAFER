@@ -26,12 +26,7 @@ urlpatterns = [
     path('', include('weather_forecast.urls')),
     path('users/', include('users.urls')),
     path('blog/', include('blog.urls')),
-    # path('', homepage, name='homepage'),
     path('community/', include('community.urls')),
-    path('community/', community_views.index, name='community'),
-    path('emergency-contacts/', community_views.emergency_contacts, name='emergency_contacts'),
-    path('about/', community_views.about, name='about'),
-    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

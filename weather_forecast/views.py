@@ -122,3 +122,9 @@ def get_location_from_ip():
     lon = location['longitude']
     lat = location['latitude']
     return city, country, lon, lat
+
+def emergency_contacts(request):
+    return render(request, 'emergency_contacts.html')
+
+def about(request):
+    return render(request, 'about.html')

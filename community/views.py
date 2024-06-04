@@ -68,12 +68,3 @@ def upload_media(request):
         # print('Media saved from upload_media view')
         return JsonResponse({'media_url': media.file.url})
     return JsonResponse({'error': 'Invalid request'}, status=400)
-
-def emergency_contacts(request):
-    return render(request, 'emergency_contacts.html')
-
-def index(request):
-    return render(request, 'community/index.html')
-
-def about(request):
-    return render(request, 'about.html')
