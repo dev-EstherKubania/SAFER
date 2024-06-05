@@ -30,32 +30,27 @@
         </form>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="#">Community</a>
+            <a class="nav-link" href="{% url 'community-home' %}">Community</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Emergency contacts</a>
+            <a class="nav-link" href="{% url 'emergency' %}">Emergency contacts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
+            <a class="nav-link" href="{% url 'blog-home' %}">Blog</a>
           </li>
         </ul>
         <ul class="navbar-nav d-flex flex-row ms-auto me-3">
-          <li class="nav-item me-3 me-lg-0">
-            <a class="nav-link btn btn-primary" href="#">Login</a>
-          </li>
-          <li class="nav-item me-3 me-lg-0">
-            <a class="nav-link btn btn-primary" href="#">Sign up</a>
-          </li>
-          
+              
+          {% if user.is_authenticated %}
           <li class="nav-item me-3 me-lg-0 dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-plus"></i>
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Add alert</a></li>
+              <li><a class="dropdown-item" href="{% url 'profile' %}">Add alert</a></li>
             </ul>
           </li>
           <li class="nav-item me-3 me-lg-0 dropdown">
@@ -65,9 +60,17 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
+              <li><a class="dropdown-item" href="{% url 'logout_user' %}">Logout</a></li>
             </ul>
           </li>
+          {% else %}
+          <li class="nav-item me-3 me-lg-0">
+            <a class="nav-link btn btn-primary" href="{% url 'login-user' %}">Login</a>
+          </li>
+          <li class="nav-item me-3 me-lg-0">
+            <a class="nav-link btn btn-primary" href="{%  url 'register' %}">Sign up</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </div>

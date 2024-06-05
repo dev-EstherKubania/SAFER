@@ -34,13 +34,13 @@
             <a class="nav-link" href="{% url 'community-home' %}">Community</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Emergency contacts</a>
+            <a class="nav-link" href="{% url 'emergency' %}">Emergency contacts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
+            <a class="nav-link" href="{% url 'blog-home' %}">Blog</a>
           </li>
           
         </ul>
@@ -52,7 +52,7 @@
               <i class="fas fa-plus"></i>
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Add alert</a></li>
+              <li><a class="dropdown-item" href="{% url 'profile' %}">Add alert</a></li>
             </ul>
           </li>
           <li class="nav-item me-3 me-lg-0 dropdown">
