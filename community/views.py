@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from alerts.models import WeatherAlert
 from .models import Region, Forum, Message, Media
 from .forms import MessageForm, CreateForumForm
 
@@ -10,11 +11,13 @@ def community_home(request):
     form = CreateForumForm()
     regions = Region.objects.all()
     forums = Forum.objects.all()
+    alerts = WeatherAlert.objects.all()
 
     context = {
         'regions': regions,
         'forums': forums,
-        'form': form
+        'form': form,
+        'alerts': alerts,
     }
 
     return render(request, 'community/index.html', context)
